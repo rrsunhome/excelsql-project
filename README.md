@@ -5,38 +5,48 @@
 
 ## 使用方法
 
+## excel 模版
+[!excel模版](doc/excel.jpg)
+
 ### insert
 ```java
- ParserConfigStorage parserConfigStorage = new ParserConfigStorage() {
-            @Override
-            public RuleParserConfig getRuleParserConfig() {
-                RuleParserConfig ruleParserConfig = new RuleParserConfig();
-                // 表名对excel sheet 的映射
-                ruleParserConfig.addTableMapping("user", 0);
-                // 字段名对excel title的映射
-                ruleParserConfig.addFieldMapping("name", 0);
-                ruleParserConfig.addFieldMapping("age", 1);
-
-                return ruleParserConfig;
-            }
-
-            @Override
-            public String getExcelPath() {
-                return "/Users/wanqijia/Documents/test-sql.xlsx";
-            }
-        };
-
-        DefaultExcelSqlGenerator excelSqlGenerator = new DefaultExcelSqlGenerator(parserConfigStorage);
-        // 可以添加显示层，默认控制台打印
-        excelSqlGenerator.addViewer(new FileViewer("/Users/wanqijia/Documents/user_sql.txt"));
-
-        excelSqlGenerator.generateInsertSql();
+           ParserConfigStorage parserConfigStorage = new ParserConfigStorage() {
+                @Override
+                public RuleParserConfig getRuleParserConfig() {
+                    RuleParserConfig ruleParserConfig = new RuleParserConfig();
+                    // 表名对excel sheet 的映射
+                    ruleParserConfig.addTableMapping("user", 0);
+                    // 字段名对excel title的映射
+                    ruleParserConfig.addFieldMapping("name", 0);
+                    ruleParserConfig.addFieldMapping("age", 1);
+    
+                    return ruleParserConfig;
+                }
+    
+                @Override
+                public String getExcelPath() {
+                    return "/Users/wanqijia/Documents/test-sql.xlsx";
+                }
+    
+                @Override
+                public Sql getSqlType() {
+                    return Sql.INSERT;
+                }
+            };
+    
+            DefaultExcelSqlGenerator excelSqlGenerator = new DefaultExcelSqlGenerator(parserConfigStorage);
+            // 可以添加显示层，默认控制台打印
+            excelSqlGenerator.addViewer(new FileViewer("/Users/wanqijia/Documents/user_sql.txt"));
+    
+            excelSqlGenerator.generate();
+```
+```sql
+    INSERT into user (`name`,`age`)  values('李三','20') ;
+    INSERT into user (`name`,`age`)  values('里斯','23') ;
 ```
 ### update
 ```java
         ParserConfigStorage parserConfigStorage = new ParserConfigStorage() {
-
-
             @Override
             public RuleParserConfig getRuleParserConfig() {
                 RuleParserConfig ruleParserConfig = new RuleParserConfig();
@@ -53,13 +63,24 @@
             public String getExcelPath() {
                 return "/Users/wanqijia/Documents/test-sql.xlsx";
             }
+
+
+            @Override
+            public Sql getSqlType() {
+                return Sql.UPDATE;
+            }
         };
 
         DefaultExcelSqlGenerator excelSqlGenerator = new DefaultExcelSqlGenerator(parserConfigStorage);
         // 可以添加显示层，默认控制台打印
         excelSqlGenerator.addViewer(new FileViewer("/Users/wanqijia/Documents/user_sql.txt"));
 
-        excelSqlGenerator.generateUpdateSql();
+        excelSqlGenerator.generate();
+```
+
+```sql
+    UPDATE user set `name`='李三',`age`='20' where name='李三' ;
+    UPDATE user set `name`='里斯',`age`='23' where name='里斯' ;
 ```
 
 ### 属性介绍

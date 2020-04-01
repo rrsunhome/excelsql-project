@@ -36,25 +36,17 @@ public class DefaultExcelSqlGenerator implements ExcelSqlGenerator {
     }
 
     @Override
-    public void generate(Sql sql) throws Exception {
+    public void generate() throws Exception {
 
         ExcelParser excelParser = new ExcelParser(parserConfigStorage.getRuleParserConfig());
 
         SqlDefinition sqlDefinition = excelParser.parser(parserConfigStorage.getExcelPath());
 
-        SqlHelper sqlHelp = new SqlHelper(sqlDefinition, sql);
+        SqlHelper sqlHelp = new SqlHelper(sqlDefinition, parserConfigStorage.getSqlType());
         List<String> sqlList = sqlHelp.generate();
 
         viewers.forEach(viewer -> viewer.outPut(sqlList));
     }
 
-    @Override
-    public void generateInsertSql() throws Exception {
-        generate(Sql.INSERT);
-    }
 
-    @Override
-    public void generateUpdateSql() throws Exception {
-        generate(Sql.UPDATE);
-    }
 }

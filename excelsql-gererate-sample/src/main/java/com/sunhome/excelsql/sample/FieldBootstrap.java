@@ -1,9 +1,6 @@
 package com.sunhome.excelsql.sample;
 
-import com.sunhome.excelsql.DefaultExcelSqlGenerator;
 import com.sunhome.excelsql.RuleParserConfig;
-import com.sunhome.excelsql.storage.ParserConfigStorage;
-import com.sunhome.excelsql.view.FileViewer;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -37,6 +34,10 @@ public class FieldBootstrap {
         // 第5列：数据和真实数据转换（excel中内容为李三，表中可能存uid int类型）
 
         ruleParserConfig.addFieldMapping("name", 0, nameFilters,true, dataMapping);
+
+
+        // 第2列：excel-title titleName 名称
+        ruleParserConfig.addFieldMapping("name", "", nameFilters,true, dataMapping);
 
     }
 }

@@ -1,8 +1,8 @@
 package com.sunhome.excelsql.sample;
 
 import com.sunhome.excelsql.DefaultExcelSqlGenerator;
-import com.sunhome.excelsql.ExcelSqlGenerator;
 import com.sunhome.excelsql.RuleParserConfig;
+import com.sunhome.excelsql.Sql;
 import com.sunhome.excelsql.storage.ParserConfigStorage;
 import com.sunhome.excelsql.view.FileViewer;
 
@@ -33,13 +33,18 @@ public class InsertSqlBootstrap {
             public String getExcelPath() {
                 return "/Users/wanqijia/Documents/test-sql.xlsx";
             }
+
+            @Override
+            public Sql getSqlType() {
+                return Sql.INSERT;
+            }
         };
 
         DefaultExcelSqlGenerator excelSqlGenerator = new DefaultExcelSqlGenerator(parserConfigStorage);
         // 可以添加显示层，默认控制台打印
         excelSqlGenerator.addViewer(new FileViewer("/Users/wanqijia/Documents/user_sql.txt"));
 
-        excelSqlGenerator.generateInsertSql();
+        excelSqlGenerator.generate();
 
     }
 }

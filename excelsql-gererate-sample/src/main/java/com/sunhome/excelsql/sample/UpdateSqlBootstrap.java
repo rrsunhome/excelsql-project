@@ -2,10 +2,9 @@ package com.sunhome.excelsql.sample;
 
 import com.sunhome.excelsql.DefaultExcelSqlGenerator;
 import com.sunhome.excelsql.RuleParserConfig;
+import com.sunhome.excelsql.Sql;
 import com.sunhome.excelsql.storage.ParserConfigStorage;
 import com.sunhome.excelsql.view.FileViewer;
-
-import java.util.ArrayList;
 
 /**
  * @author : qijia.wang
@@ -18,8 +17,6 @@ public class UpdateSqlBootstrap {
 
 
         ParserConfigStorage parserConfigStorage = new ParserConfigStorage() {
-
-
             @Override
             public RuleParserConfig getRuleParserConfig() {
                 RuleParserConfig ruleParserConfig = new RuleParserConfig();
@@ -36,13 +33,19 @@ public class UpdateSqlBootstrap {
             public String getExcelPath() {
                 return "/Users/wanqijia/Documents/test-sql.xlsx";
             }
+
+
+            @Override
+            public Sql getSqlType() {
+                return Sql.UPDATE;
+            }
         };
 
         DefaultExcelSqlGenerator excelSqlGenerator = new DefaultExcelSqlGenerator(parserConfigStorage);
         // 可以添加显示层，默认控制台打印
         excelSqlGenerator.addViewer(new FileViewer("/Users/wanqijia/Documents/user_sql.txt"));
 
-        excelSqlGenerator.generateUpdateSql();
+        excelSqlGenerator.generate();
 
     }
 }

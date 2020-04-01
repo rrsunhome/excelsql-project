@@ -1,6 +1,6 @@
 # excelsql 
 
-## excel中数据对SQL的转换，可以快速将SQL打印出来
+## excel中数据对SQL的转换，可以快速将SQL生成
 
 
 ## 使用方法

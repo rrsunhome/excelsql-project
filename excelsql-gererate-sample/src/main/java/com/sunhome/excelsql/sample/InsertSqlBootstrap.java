@@ -28,13 +28,18 @@ public class InsertSqlBootstrap {
 
                 return ruleParserConfig;
             }
+
+            @Override
+            public String getExcelPath() {
+                return "/Users/wanqijia/Documents/test-sql.xlsx";
+            }
         };
 
         DefaultExcelSqlGenerator excelSqlGenerator = new DefaultExcelSqlGenerator(parserConfigStorage);
         // 可以添加显示层，默认控制台打印
         excelSqlGenerator.addViewer(new FileViewer("/Users/wanqijia/Documents/user_sql.txt"));
 
-        excelSqlGenerator.executeInsertSql("/Users/wanqijia/Documents/test-sql.xlsx");
+        excelSqlGenerator.generateInsertSql();
 
     }
 }

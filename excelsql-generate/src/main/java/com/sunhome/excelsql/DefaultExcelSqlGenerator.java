@@ -36,11 +36,11 @@ public class DefaultExcelSqlGenerator implements ExcelSqlGenerator {
     }
 
     @Override
-    public void execute(String excelFilePath, Sql sql) throws Exception {
+    public void generate(Sql sql) throws Exception {
 
         ExcelParser excelParser = new ExcelParser(parserConfigStorage.getRuleParserConfig());
 
-        SqlDefinition sqlDefinition = excelParser.parser(excelFilePath);
+        SqlDefinition sqlDefinition = excelParser.parser(parserConfigStorage.getExcelPath());
 
         SqlHelper sqlHelp = new SqlHelper(sqlDefinition, sql);
         List<String> sqlList = sqlHelp.generate();
@@ -49,12 +49,12 @@ public class DefaultExcelSqlGenerator implements ExcelSqlGenerator {
     }
 
     @Override
-    public void executeInsertSql(String excelFilePath) throws Exception {
-        execute(excelFilePath, Sql.INSERT);
+    public void generateInsertSql() throws Exception {
+        generate(Sql.INSERT);
     }
 
     @Override
-    public void executeUpdateSql(String excelFilePath) throws Exception {
-        execute(excelFilePath, Sql.UPDATE);
+    public void generateUpdateSql() throws Exception {
+        generate(Sql.UPDATE);
     }
 }

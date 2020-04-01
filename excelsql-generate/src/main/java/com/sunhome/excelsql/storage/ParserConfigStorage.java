@@ -5,4 +5,6 @@ import com.sunhome.excelsql.RuleParserConfig;
 public interface ParserConfigStorage {
 
     RuleParserConfig getRuleParserConfig();
+
+    String getExcelPath();
 }

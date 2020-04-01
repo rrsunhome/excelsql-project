@@ -18,6 +18,8 @@ public class UpdateSqlBootstrap {
 
 
         ParserConfigStorage parserConfigStorage = new ParserConfigStorage() {
+
+
             @Override
             public RuleParserConfig getRuleParserConfig() {
                 RuleParserConfig ruleParserConfig = new RuleParserConfig();
@@ -29,13 +31,18 @@ public class UpdateSqlBootstrap {
 
                 return ruleParserConfig;
             }
+
+            @Override
+            public String getExcelPath() {
+                return "/Users/wanqijia/Documents/test-sql.xlsx";
+            }
         };
 
         DefaultExcelSqlGenerator excelSqlGenerator = new DefaultExcelSqlGenerator(parserConfigStorage);
         // 可以添加显示层，默认控制台打印
         excelSqlGenerator.addViewer(new FileViewer("/Users/wanqijia/Documents/user_sql.txt"));
 
-        excelSqlGenerator.executeUpdateSql("/Users/wanqijia/Documents/test-sql.xlsx");
+        excelSqlGenerator.generateUpdateSql();
 
     }
 }

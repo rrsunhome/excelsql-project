@@ -6,7 +6,7 @@
 ## 使用方法
 
 ## excel 模版
-[!excel模版](doc/excel.jpg)
+![excel模版](doc/excel.jpg)
 
 ### insert
 ```java

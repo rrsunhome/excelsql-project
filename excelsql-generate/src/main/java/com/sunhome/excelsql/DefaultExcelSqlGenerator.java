@@ -17,12 +17,15 @@ public class DefaultExcelSqlGenerator implements ExcelSqlGenerator {
 
     private ParserConfigStorage parserConfigStorage;
 
+    private ExcelParser excelParser;
+
     private List<Viewer> viewers;
 
 
     public DefaultExcelSqlGenerator(ParserConfigStorage parserConfigStorage) {
         this.parserConfigStorage = parserConfigStorage;
         this.viewers = defaultViewers();
+        excelParser = new ExcelParser();
     }
 
     public void addViewer(Viewer viewer) {
@@ -37,10 +40,7 @@ public class DefaultExcelSqlGenerator implements ExcelSqlGenerator {
 
     @Override
     public void generate() throws Exception {
-
-        ExcelParser excelParser = new ExcelParser(parserConfigStorage.getRuleParserConfig());
-
-        SqlDefinition sqlDefinition = excelParser.parser(parserConfigStorage.getExcelPath());
+        SqlDefinition sqlDefinition = excelParser.parser(parserConfigStorage.getExcelPath(), parserConfigStorage.getRuleParserConfig());
 
         SqlHelper sqlHelp = new SqlHelper(sqlDefinition, parserConfigStorage.getSqlType());
         List<String> sqlList = sqlHelp.generate();

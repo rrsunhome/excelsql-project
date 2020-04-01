@@ -15,17 +15,12 @@ import java.util.List;
  */
 public class ExcelParser {
 
-    private RuleParserConfig ruleParserConfig;
 
-    public ExcelParser(RuleParserConfig ruleParserConfig) {
-        this.ruleParserConfig = ruleParserConfig;
+    public SqlDefinition parser(String path, RuleParserConfig ruleParserConfig) throws Exception {
+        return parser(new File(path), ruleParserConfig);
     }
 
-    public SqlDefinition parser(String path) throws Exception {
-        return parser(new File(path));
-    }
-
-    public SqlDefinition parser(File file) throws Exception {
+    public SqlDefinition parser(File file, RuleParserConfig ruleParserConfig) throws Exception {
 
         List<RuleParserConfig.FieldMapping> fieldMappings = ruleParserConfig.getFieldMappings();
 

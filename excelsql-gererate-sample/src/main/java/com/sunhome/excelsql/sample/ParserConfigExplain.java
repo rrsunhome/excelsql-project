@@ -12,7 +12,7 @@ import java.util.Map;
  * create at:  2020/4/1  下午4:10
  * @description:
  */
-public class FieldBootstrap {
+public class ParserConfigExplain {
 
     public static void main(String[] args) throws Exception {
 

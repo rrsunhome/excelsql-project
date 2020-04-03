@@ -1,10 +1,11 @@
 package com.sunhome.excelsql;
 
 import com.sunhome.excelsql.parse.ExcelParser;
-import com.sunhome.excelsql.storage.ParserConfigStorage;
+import com.sunhome.excelsql.util.ExcelInputStream;
 import com.sunhome.excelsql.view.ConsoleViewer;
 import com.sunhome.excelsql.view.Viewer;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,15 +16,15 @@ import java.util.List;
  */
 public class DefaultExcelSqlGenerator implements ExcelSqlGenerator {
 
-    private ParserConfigStorage parserConfigStorage;
+    private ParserConfigSource parserConfigSource;
 
     private ExcelParser excelParser;
 
     private List<Viewer> viewers;
 
 
-    public DefaultExcelSqlGenerator(ParserConfigStorage parserConfigStorage) {
-        this.parserConfigStorage = parserConfigStorage;
+    public DefaultExcelSqlGenerator(ParserConfigSource parserConfigSource) {
+        this.parserConfigSource = parserConfigSource;
         this.viewers = defaultViewers();
         excelParser = new ExcelParser();
     }
@@ -40,9 +41,10 @@ public class DefaultExcelSqlGenerator implements ExcelSqlGenerator {
 
     @Override
     public void generate() throws Exception {
-        SqlDefinition sqlDefinition = excelParser.parser(parserConfigStorage.getExcelPath(), parserConfigStorage.getRuleParserConfig());
+        InputStream is = ExcelInputStream.createInputStream(parserConfigSource.path());
+        SqlDefinition sqlDefinition = excelParser.parser(is, parserConfigSource.initParserConfig());
 
-        SqlHelper sqlHelp = new SqlHelper(sqlDefinition, parserConfigStorage.getSqlType());
+        SqlHelper sqlHelp = new SqlHelper(sqlDefinition, parserConfigSource.sql());
         List<String> sqlList = sqlHelp.generate();
 
         viewers.forEach(viewer -> viewer.outPut(sqlList));

@@ -1,106 +1,77 @@
 # excelsql 
 
-## excel中数据对SQL的转换，可以快速将SQL生成
+## 目的
+利用简单的配置，快速把excel的数据生成对应的sql
+
+## 相关文档说明
+* 配置对象->RuleParserConfig
+    * 配置title行->RuleParserConfig.setStartRowIndex(0);
+    * table映射excel sheet->RuleParserConfig.addTableMapping("user", 0); 
+    * 字段名对excel title的映射-> RuleParserConfig.addFieldMapping("name", 0, nameFilters,true, dataMapping); 
+    * 详情配置见 -> [配置详情](excelsql-gererate-sample/src/main/java/com/sunhome/excelsql/sample/ParserConfigExplain.java)
 
 
-## 使用方法
+## 快速开始
 
-## excel 模版
-![excel模版](doc/excel.jpg)
-
-### insert
+### 生成 insert语句
+demo代码地址：
+https://github.com/rrsunhome/excelsql-project/blob/master/excelsql-gererate-sample/src/main/java/com/sunhome/excelsql/sample/InsertSqlBootstrap.java
 ```java
-           ParserConfigStorage parserConfigStorage = new ParserConfigStorage() {
-                @Override
-                public RuleParserConfig getRuleParserConfig() {
-                    RuleParserConfig ruleParserConfig = new RuleParserConfig();
-                    // 表名对excel sheet 的映射
-                    ruleParserConfig.addTableMapping("user", 0);
-                    // 字段名对excel title的映射
-                    ruleParserConfig.addFieldMapping("name", 0);
-                    ruleParserConfig.addFieldMapping("age", 1);
-    
-                    return ruleParserConfig;
-                }
-    
-                @Override
-                public String getExcelPath() {
-                    return "/Users/wanqijia/Documents/test-sql.xlsx";
-                }
-    
-                @Override
-                public Sql getSqlType() {
-                    return Sql.INSERT;
-                }
-            };
-    
-            DefaultExcelSqlGenerator excelSqlGenerator = new DefaultExcelSqlGenerator(parserConfigStorage);
-            // 可以添加显示层，默认控制台打印
-            excelSqlGenerator.addViewer(new FileViewer("/Users/wanqijia/Documents/user_sql.txt"));
-    
-            excelSqlGenerator.generate();
-```
-```sql
-    INSERT into user (`name`,`age`)  values('李三','20') ;
-    INSERT into user (`name`,`age`)  values('里斯','23') ;
-```
-### update
-```java
-        ParserConfigStorage parserConfigStorage = new ParserConfigStorage() {
+       ParserConfigSource parserConfigSource = new ParserConfigSourceAdapter() {
             @Override
-            public RuleParserConfig getRuleParserConfig() {
-                RuleParserConfig ruleParserConfig = new RuleParserConfig();
+            protected void addParserConfig(RuleParserConfig ruleParserConfig) {
+                // 表名对excel sheet 的映射
+                ruleParserConfig.addTableMapping("user", 0);
+                // 字段名对excel title的映射
+                ruleParserConfig.addFieldMapping("name", 0);
+                ruleParserConfig.addFieldMapping("age", 1);
+            }
+
+            @Override
+            public String path() {
+                return "test-sql.xlsx";
+            }
+            @Override
+            public Sql sql() {
+                return Sql.INSERT;
+            }
+        };
+
+        DefaultExcelSqlGenerator excelSqlGenerator = new DefaultExcelSqlGenerator(parserConfigSource);
+        // 可以添加显示层，默认控制台打印
+       // excelSqlGenerator.addViewer(new FileViewer("/Users/xxx/Documents/user_sql.txt"));
+
+        excelSqlGenerator.generate();
+```
+
+### 生成 update语句
+demo代码地址：
+https://github.com/rrsunhome/excelsql-project/blob/master/excelsql-gererate-sample/src/main/java/com/sunhome/excelsql/sample/UpdateSqlBootstrap.java
+```java
+        ParserConfigSource parserConfigSource = new ParserConfigSourceAdapter() {
+            @Override
+            protected void addParserConfig(RuleParserConfig ruleParserConfig) {
+                ruleParserConfig.setStartRowIndex(0);
                 // 表名对excel sheet 的映射
                 ruleParserConfig.addTableMapping("user", 0);
                 // 字段名对excel title的映射
                 ruleParserConfig.addFieldMapping("name", 0, true);
                 ruleParserConfig.addFieldMapping("age", 1);
-
-                return ruleParserConfig;
             }
 
             @Override
-            public String getExcelPath() {
-                return "/Users/wanqijia/Documents/test-sql.xlsx";
+            public String path() {
+                return "test-sql.xlsx";
             }
-
-
             @Override
-            public Sql getSqlType() {
+            public Sql sql() {
                 return Sql.UPDATE;
             }
         };
 
-        DefaultExcelSqlGenerator excelSqlGenerator = new DefaultExcelSqlGenerator(parserConfigStorage);
+        DefaultExcelSqlGenerator excelSqlGenerator = new DefaultExcelSqlGenerator(parserConfigSource);
         // 可以添加显示层，默认控制台打印
-        excelSqlGenerator.addViewer(new FileViewer("/Users/wanqijia/Documents/user_sql.txt"));
+        //excelSqlGenerator.addViewer(new FileViewer("/Users/xxx/Documents/user_sql.txt"));
 
         excelSqlGenerator.generate();
-```
-
-```sql
-    UPDATE user set `name`='李三',`age`='20' where name='李三' ;
-    UPDATE user set `name`='里斯',`age`='23' where name='里斯' ;
-```
-
-### 属性介绍
-```java
-  RuleParserConfig ruleParserConfig = new RuleParserConfig();
-        // 表名对excel sheet 的映射
-        //  第1列：table名称
-        //  第2列：sheet 所在下表
-
-        ruleParserConfig.addTableMapping("user", 0);
-        // 字段名对excel title的映射
-        List<String> nameFilters = Arrays.asList("李三");
-        Map<Object, Object> dataMapping = new HashMap<>();
-        dataMapping.put("李三", 1);
-        
-        // 第1列：表中-字段名称
-        // 第2列：excel-title所在列数
-        // 第3列：excel-value过滤那些内容
-        // 第4列：当为update时有效，该字段作为WHERE 后拼接条件
-        // 第5列：数据和真实数据转换（excel中内容为李三，表中可能存uid int类型）
-
-        ruleParserConfig.addFieldMapping("name", 0, nameFilters,true, dataMapping);
 ```

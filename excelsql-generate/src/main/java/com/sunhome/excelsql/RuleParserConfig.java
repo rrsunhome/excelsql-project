@@ -96,6 +96,9 @@ public class RuleParserConfig {
         return startRowIndex;
     }
 
+    public void setStartRowIndex(int startRowIndex) {
+        this.startRowIndex = startRowIndex;
+    }
 
     public class FieldMapping {
 

@@ -95,9 +95,29 @@ public class ExcelUtils {
         return list;
     }
 
+    public static List<List<Object>> readExcel(InputStream is, int sheetIndex, int startRowIndex) throws Exception {
+        List<List<Object>> list = new ArrayList<List<Object>>();
+        Workbook wb = getWorkbook(is);
+        if (wb != null) {
+            Sheet sheet = getSheet(wb, sheetIndex);
+            list = getSheetData(wb, sheet, startRowIndex);
+        }
+        return list;
+    }
+
     public static List<List<Object>> readExcel(File file, String sheetName, int startRowIndex) throws Exception {
         List<List<Object>> list = new ArrayList<List<Object>>();
         Workbook wb = getWorkbook(file);
+        if (wb != null) {
+            Sheet sheet = getSheet(wb, sheetName);
+            list = getSheetData(wb, sheet, startRowIndex);
+        }
+        return list;
+    }
+
+    public static List<List<Object>> readExcel(InputStream is, String sheetName, int startRowIndex) throws Exception {
+        List<List<Object>> list = new ArrayList<List<Object>>();
+        Workbook wb = getWorkbook(is);
         if (wb != null) {
             Sheet sheet = getSheet(wb, sheetName);
             list = getSheetData(wb, sheet, startRowIndex);
@@ -116,6 +136,16 @@ public class ExcelUtils {
     public static List<List<Object>> readExcel(File file, String sheetName) throws Exception {
         List<List<Object>> list = new ArrayList<List<Object>>();
         Workbook wb = getWorkbook(file);
+        if (wb != null) {
+            Sheet sheet = getSheet(wb, sheetName);
+            list = getSheetData(wb, sheet);
+        }
+        return list;
+    }
+
+    public static List<List<Object>> readExcel(InputStream is, String sheetName) throws Exception {
+        List<List<Object>> list = new ArrayList<List<Object>>();
+        Workbook wb = getWorkbook(is);
         if (wb != null) {
             Sheet sheet = getSheet(wb, sheetName);
             list = getSheetData(wb, sheet);
@@ -309,7 +339,11 @@ public class ExcelUtils {
      * @throws Exception
      */
     public static Workbook getWorkbook(File file) throws Exception {
-        Workbook wb = WorkbookFactory.create(new FileInputStream(file));
+        return getWorkbook(new FileInputStream(file));
+    }
+
+    public static Workbook getWorkbook(InputStream is) throws Exception {
+        Workbook wb = WorkbookFactory.create(is);
         return wb;
     }
 

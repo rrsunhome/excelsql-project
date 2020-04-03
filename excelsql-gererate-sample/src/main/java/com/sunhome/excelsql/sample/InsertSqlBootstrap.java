@@ -1,9 +1,6 @@
 package com.sunhome.excelsql.sample;
 
-import com.sunhome.excelsql.DefaultExcelSqlGenerator;
-import com.sunhome.excelsql.RuleParserConfig;
-import com.sunhome.excelsql.Sql;
-import com.sunhome.excelsql.storage.ParserConfigStorage;
+import com.sunhome.excelsql.*;
 import com.sunhome.excelsql.view.FileViewer;
 
 /**
@@ -16,33 +13,29 @@ public class InsertSqlBootstrap {
     public static void main(String[] args) throws Exception {
 
 
-        ParserConfigStorage parserConfigStorage = new ParserConfigStorage() {
+        ParserConfigSource parserConfigSource = new ParserConfigSourceAdapter() {
             @Override
-            public RuleParserConfig getRuleParserConfig() {
-                RuleParserConfig ruleParserConfig = new RuleParserConfig();
+            protected void addParserConfig(RuleParserConfig ruleParserConfig) {
                 // 表名对excel sheet 的映射
                 ruleParserConfig.addTableMapping("user", 0);
                 // 字段名对excel title的映射
                 ruleParserConfig.addFieldMapping("name", 0);
                 ruleParserConfig.addFieldMapping("age", 1);
-
-                return ruleParserConfig;
             }
 
             @Override
-            public String getExcelPath() {
+            public String path() {
                 return "/Users/wanqijia/Documents/test-sql.xlsx";
             }
-
             @Override
-            public Sql getSqlType() {
+            public Sql sql() {
                 return Sql.INSERT;
             }
         };
 
-        DefaultExcelSqlGenerator excelSqlGenerator = new DefaultExcelSqlGenerator(parserConfigStorage);
+        DefaultExcelSqlGenerator excelSqlGenerator = new DefaultExcelSqlGenerator(parserConfigSource);
         // 可以添加显示层，默认控制台打印
-        excelSqlGenerator.addViewer(new FileViewer("/Users/wanqijia/Documents/user_sql.txt"));
+       // excelSqlGenerator.addViewer(new FileViewer("/Users/xxx/Documents/user_sql.txt"));
 
         excelSqlGenerator.generate();
 

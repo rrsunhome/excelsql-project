@@ -2,10 +2,13 @@ package com.sunhome.excelsql.parse;
 
 import com.sunhome.excelsql.RuleParserConfig;
 import com.sunhome.excelsql.SqlDefinition;
+import com.sunhome.excelsql.util.ExcelInputStream;
 import com.sunhome.excelsql.util.ExcelUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -21,15 +24,19 @@ public class ExcelParser {
     }
 
     public SqlDefinition parser(File file, RuleParserConfig ruleParserConfig) throws Exception {
+        return parser(new FileInputStream(file), ruleParserConfig);
+    }
+
+    public SqlDefinition parser(InputStream is, RuleParserConfig ruleParserConfig) throws Exception {
 
         List<RuleParserConfig.FieldMapping> fieldMappings = ruleParserConfig.getFieldMappings();
 
         RuleParserConfig.TableMapping tableMapping = ruleParserConfig.getTableMapping();
         List<List<Object>> lists = null;
         if (StringUtils.isEmpty(tableMapping.getSheetName())) {
-            lists = ExcelUtils.readExcel(file, tableMapping.getSheetIndex(), ruleParserConfig.getStartRowIndex());
+            lists = ExcelUtils.readExcel(is, tableMapping.getSheetIndex(), ruleParserConfig.getStartRowIndex());
         } else {
-            lists = ExcelUtils.readExcel(file, tableMapping.getSheetName(), ruleParserConfig.getStartRowIndex());
+            lists = ExcelUtils.readExcel(is , tableMapping.getSheetName(), ruleParserConfig.getStartRowIndex());
         }
 
         SqlDefinition sqlDefinition = new SqlDefinition(tableMapping.getTableName());

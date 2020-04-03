@@ -1,5 +1,7 @@
 package com.sunhome.excelsql.util;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -9,6 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -639,36 +642,34 @@ public class ExcelUtils {
     }
 
     private static String getCellValue(Workbook wb, Cell cell) {
+        //判断是否为null或空串
+        if (cell==null || cell.toString().trim().equals("")) {
+            return "";
+        }
         String cellValue = "";
-        if (cell == null) {
-            return cellValue;
+        int cellType=cell.getCellType();
+        if(cellType==Cell.CELL_TYPE_FORMULA){ //表达式类型
+            cellType=cell.getCellType();
         }
-        //把数字当成String来读，避免出现1读成1.0的情况
-        if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-            cell.setCellType(Cell.CELL_TYPE_STRING);
-        }
-        //判断数据的类型
-        switch (cell.getCellType()) {
-            case Cell.CELL_TYPE_NUMERIC: //数字
-                cellValue = String.valueOf(cell.getNumericCellValue());
+
+        switch (cellType) {
+            case Cell.CELL_TYPE_STRING: //字符串类型
+                cellValue= cell.getStringCellValue().trim();
+                cellValue= StringUtils.isEmpty(cellValue) ? "" : cellValue;
                 break;
-            case Cell.CELL_TYPE_STRING: //字符串
-                cellValue = String.valueOf(cell.getStringCellValue());
-                break;
-            case Cell.CELL_TYPE_BOOLEAN: //Boolean
+            case Cell.CELL_TYPE_BOOLEAN:  //布尔类型
                 cellValue = String.valueOf(cell.getBooleanCellValue());
                 break;
-            case Cell.CELL_TYPE_FORMULA: //公式
-                cellValue = String.valueOf(cell.getCellFormula());
+            case Cell.CELL_TYPE_NUMERIC: //数值类型
+                if (HSSFDateUtil.isCellDateFormatted(cell)) {  //判断日期类型
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    cellValue =   sdf.format(cell.getDateCellValue());
+                } else {  //否
+                    cellValue = new DecimalFormat("#.######").format(cell.getNumericCellValue());
+                }
                 break;
-            case Cell.CELL_TYPE_BLANK: //空值
+            default: //其它类型，取空串吧
                 cellValue = "";
-                break;
-            case Cell.CELL_TYPE_ERROR: //故障
-                cellValue = "非法字符";
-                break;
-            default:
-                cellValue = "未知类型";
                 break;
         }
         return cellValue;

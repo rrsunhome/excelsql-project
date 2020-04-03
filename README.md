@@ -4,10 +4,11 @@
 利用简单的配置，快速把excel的数据生成对应的sql
 
 ## 相关文档说明
-* 配置对象->RuleParserConfig
+* 配置信息->
     * 配置title行->RuleParserConfig.setStartRowIndex(0);
     * table映射excel sheet->RuleParserConfig.addTableMapping("user", 0); 
     * 字段名对excel title的映射-> RuleParserConfig.addFieldMapping("name", 0, nameFilters,true, dataMapping); 
+    * 文件路径：支持本地和远程地址
     * 详情配置见 -> [配置详情](excelsql-gererate-sample/src/main/java/com/sunhome/excelsql/sample/ParserConfigExplain.java)
 
 
@@ -75,3 +76,6 @@ https://github.com/rrsunhome/excelsql-project/blob/master/excelsql-gererate-samp
 
         excelSqlGenerator.generate();
 ```
+
+### 使用问题
+    有任何bug,git留言

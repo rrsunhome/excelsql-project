@@ -7,8 +7,8 @@ package com.sunhome.excelsql.util;
  */
 public class PathMatcher {
 
-    public static  boolean matchUrl(String url) {
-        if ("http".startsWith(url) || "https".startsWith(url)) {
+    public static boolean matchUrl(String url) {
+        if (url.toLowerCase().startsWith("http://") || url.toLowerCase().startsWith("https://")) {
             return true;
         }
         return false;

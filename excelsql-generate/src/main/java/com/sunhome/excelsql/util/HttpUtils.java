@@ -17,11 +17,11 @@ public class HttpUtils {
     /**
      * 连接超时
      */
-    private static final int CONNECT_TIMEOUT = 10;
+    private static final int CONNECT_TIMEOUT = 10 * 1000;
     /**
      * 读取超时
      */
-    private static final int READ_TIMEOUT = 10;
+    private static final int READ_TIMEOUT = 10 * 1000;
 
 
     public static InputStream read(String path) throws IOException {
@@ -33,6 +33,7 @@ public class HttpUtils {
             e.printStackTrace();
         }
         try {
+            System.out.printf("remote url: %s read ...\n", path);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoInput(true);
             conn.setConnectTimeout(CONNECT_TIMEOUT);
@@ -41,10 +42,8 @@ public class HttpUtils {
             is = conn.getInputStream();
 
         } catch (SocketTimeoutException e) {
-            e.printStackTrace();
-            throw new SocketTimeoutException("连接超时,读取远程资源失败");
+            throw new SocketTimeoutException("连接超时,读取远程资源失败(10s)");
         } catch (IOException e) {
-            e.printStackTrace();
             throw new IOException("读取异常,读取远程资源失败");
         }
         return is;

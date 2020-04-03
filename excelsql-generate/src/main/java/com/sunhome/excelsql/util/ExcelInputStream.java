@@ -1,10 +1,7 @@
 package com.sunhome.excelsql.util;
 
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  * @author : qijia.wang

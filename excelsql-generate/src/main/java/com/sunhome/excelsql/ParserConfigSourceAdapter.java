@@ -8,7 +8,7 @@ package com.sunhome.excelsql;
 public abstract class ParserConfigSourceAdapter implements ParserConfigSource {
 
     @Override
-    public RuleParserConfig initParserConfig() {
+    public final RuleParserConfig initParserConfig() {
         RuleParserConfig ruleParserConfig = new RuleParserConfig();
         addParserConfig(ruleParserConfig);
         return ruleParserConfig;

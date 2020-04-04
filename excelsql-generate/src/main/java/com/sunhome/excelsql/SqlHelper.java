@@ -19,18 +19,73 @@ public class SqlHelper {
     public SqlHelper(SqlDefinition sqlDefinition, Sql sql) {
         this.sqlDefinition = sqlDefinition;
         this.sql = sql;
+
     }
 
     public List<String> generate() {
         if (Sql.INSERT.equals(sql)) {
             return inertSql();
-
         } else if (Sql.UPDATE.equals(sql)) {
             return updateSql();
+        } else if (Sql.DELETE.equals(sql)) {
+            return deleteSql();
+        } else if (Sql.SELECT.equals(sql)) {
+            return selectSql();
         }
-        return null;
+
+        throw new IllegalArgumentException("sql 类型 配置有误");
+    }
+
+    private List<String> selectSql() {
+        List<String> sqlList = new ArrayList<>();
+        List<SqlDefinition.RowDefinition> rowDefinitions = sqlDefinition.getRowDefinitions();
+        for (SqlDefinition.RowDefinition rowDefinition : rowDefinitions) {
+            List<SqlDefinition.FieldDefinition> fieldDefinitions = rowDefinition.getFieldDefinitions();
+
+            StringBuffer selectSql = new StringBuffer().
+                    append(Sql.SELECT.name().toLowerCase())
+                    .append(" * ")
+                    .append(" from ")
+                    .append(sqlDefinition.getTableName());
+
+
+            List<SqlDefinition.FieldDefinition> conditionDefinitions = new ArrayList<>();
+            for (SqlDefinition.FieldDefinition fieldDefinition : fieldDefinitions) {
+                if (fieldDefinition.isCondition()) {
+                    conditionDefinitions.add(fieldDefinition);
+                }
+            }
+            appendCondition(selectSql, conditionDefinitions);
+            sqlList.add(selectSql.toString());
+        }
+        return sqlList;
 
     }
+
+    private List<String> deleteSql() {
+        List<String> sqlList = new ArrayList<>();
+        List<SqlDefinition.RowDefinition> rowDefinitions = sqlDefinition.getRowDefinitions();
+        for (SqlDefinition.RowDefinition rowDefinition : rowDefinitions) {
+            List<SqlDefinition.FieldDefinition> fieldDefinitions = rowDefinition.getFieldDefinitions();
+            StringBuffer selectSql = new StringBuffer().
+                    append(Sql.DELETE.name().toLowerCase())
+                    .append(" from ")
+                    .append(sqlDefinition.getTableName());
+
+            List<SqlDefinition.FieldDefinition> conditionDefinitions = new ArrayList<>();
+            for (SqlDefinition.FieldDefinition fieldDefinition : fieldDefinitions) {
+                if (fieldDefinition.isCondition()) {
+                    conditionDefinitions.add(fieldDefinition);
+                }
+            }
+
+            appendCondition(selectSql, conditionDefinitions);
+            sqlList.add(selectSql.toString());
+        }
+        return sqlList;
+
+    }
+
 
     private List<String> updateSql() {
         List<String> sqlList = new ArrayList<>();
@@ -39,7 +94,7 @@ public class SqlHelper {
             List<SqlDefinition.FieldDefinition> fieldDefinitions = rowDefinition.getFieldDefinitions();
 
             StringBuffer updateSql = new StringBuffer().
-                    append(Sql.UPDATE.name())
+                    append(Sql.UPDATE.name().toLowerCase())
                     .append(" ")
                     .append(sqlDefinition.getTableName())
                     .append(" set ");
@@ -57,20 +112,8 @@ public class SqlHelper {
             }
 
             updateSql.deleteCharAt(updateSql.length() - 1);
-            updateSql.append(" where ");
 
-            if (conditionDefinitions.isEmpty()) {
-                throw new RuntimeException("配置规则无条件确定");
-            }
-
-            for (SqlDefinition.FieldDefinition conditionDefinition : conditionDefinitions) {
-                updateSql.append(conditionDefinition.getField())
-                        .append("=")
-                        .append(SqlUtils.specialChars(conditionDefinition.getFieldValue()))
-                        .append(" and ");
-            }
-            updateSql.delete(updateSql.lastIndexOf("and"), updateSql.length());
-            updateSql.append(";");
+            appendCondition(updateSql, conditionDefinitions);
 
             sqlList.add(updateSql.toString());
         }
@@ -82,7 +125,7 @@ public class SqlHelper {
         List<String> sqlList = new ArrayList<>();
         List<SqlDefinition.RowDefinition> rowDefinitions = sqlDefinition.getRowDefinitions();
         for (SqlDefinition.RowDefinition rowDefinition : rowDefinitions) {
-            StringBuffer insertSql = new StringBuffer().append(Sql.INSERT.name())
+            StringBuffer insertSql = new StringBuffer().append(Sql.INSERT.name().toLowerCase())
                     .append(" into ")
                     .append(sqlDefinition.getTableName())
                     .append(" (")
@@ -90,12 +133,26 @@ public class SqlHelper {
                     .append(") ")
                     .append(" values(")
                     .append(SqlUtils.specialChars(rowDefinition.getFieldValues()))
-                    .append(") ")
-                    .append(";");
+                    .append(");");
             sqlList.add(insertSql.toString());
         }
         return sqlList;
     }
 
+
+    private void appendCondition(StringBuffer sql, List<SqlDefinition.FieldDefinition> conditionDefinitions) {
+        if (conditionDefinitions.isEmpty()) {
+            throw new IllegalArgumentException("配置错误,无法完成解析");
+        }
+        sql.append(" where ");
+        for (SqlDefinition.FieldDefinition conditionDefinition : conditionDefinitions) {
+            sql.append(conditionDefinition.getField())
+                    .append("=")
+                    .append(SqlUtils.specialChars(conditionDefinition.getFieldValue()))
+                    .append(" and ");
+        }
+        sql.delete(sql.lastIndexOf(" and "), sql.length());
+        sql.append(";");
+    }
 
 }

@@ -28,6 +28,7 @@ public class InsertSqlBootstrap {
                 ruleParserConfig.setStartRowIndex(1);
                 // 表名对excel sheet 的映射
                 ruleParserConfig.addTableMapping("user", 0);
+
                 // 字段名对excel title的映射
                 ruleParserConfig.addFieldMapping("name", 0);
                 ruleParserConfig.addFieldMapping("age", 1);
@@ -35,7 +36,8 @@ public class InsertSqlBootstrap {
 
             @Override
             public String path() {
-                return "test-sql.xlsx";
+                return "/Users/wanqijia/Documents/test-sql.xlsx";
+
             }
             @Override
             public Sql sql() {

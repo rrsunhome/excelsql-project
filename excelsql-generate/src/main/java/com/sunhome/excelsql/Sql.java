@@ -6,4 +6,8 @@ public enum Sql {
 
     UPDATE,
 
+    DELETE,
+
+    SELECT;
+
 }

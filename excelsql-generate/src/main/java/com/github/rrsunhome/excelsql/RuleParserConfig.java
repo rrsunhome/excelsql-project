@@ -8,7 +8,6 @@ import java.util.Map;
 /**
  * @author : qijia.wang
  * create at:  2020/3/31  下午3:43
- * @description:
  */
 public class RuleParserConfig {
 

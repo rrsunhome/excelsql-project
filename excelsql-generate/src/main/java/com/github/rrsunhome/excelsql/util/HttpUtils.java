@@ -10,7 +10,6 @@ import java.net.URL;
 /**
  * @author : qijia.wang
  * create at:  2020/4/3  下午10:31
- * @description:
  */
 public class HttpUtils {
 
@@ -24,6 +23,12 @@ public class HttpUtils {
     private static final int READ_TIMEOUT = 10 * 1000;
 
 
+    /**
+     *
+     * @param path 网络路径
+     * @return InputStream
+     * @throws IOException 网络异常
+     */
     public static InputStream read(String path) throws IOException {
         URL url = null;
         InputStream is = null;

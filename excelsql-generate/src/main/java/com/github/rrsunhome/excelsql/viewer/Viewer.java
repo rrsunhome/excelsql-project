@@ -1,4 +1,4 @@
-package com.github.rrsunhome.excelsql.view;
+package com.github.rrsunhome.excelsql.viewer;
 
 import java.util.List;
 

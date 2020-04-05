@@ -5,21 +5,21 @@ public interface ParserConfigSource {
     /**
      * 解析相关配置
      *
-     * @return
+     * @return RuleParserConfig
      */
     RuleParserConfig initParserConfig();
 
     /**
      * 文件路径
      *
-     * @return
+     * @return 文件路径
      */
     String path();
 
     /**
      * 获取sql类型
      *
-     * @return
+     * @return  sql类型
      */
     Sql sql();
 

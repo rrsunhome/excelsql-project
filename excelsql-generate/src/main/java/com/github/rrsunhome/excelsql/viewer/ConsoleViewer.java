@@ -1,4 +1,4 @@
-package com.github.rrsunhome.excelsql.view;
+package com.github.rrsunhome.excelsql.viewer;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * @author : qijia.wang
  * create at:  2020/3/31  下午3:45
- * @description:
  */
 public class ConsoleViewer implements Viewer {
 

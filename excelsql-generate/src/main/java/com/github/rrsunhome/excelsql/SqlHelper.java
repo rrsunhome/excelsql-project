@@ -8,7 +8,6 @@ import java.util.List;
 /**
  * @author : qijia.wang
  * create at:  2020/3/31  下午3:45
- * @description:
  */
 public class SqlHelper {
 

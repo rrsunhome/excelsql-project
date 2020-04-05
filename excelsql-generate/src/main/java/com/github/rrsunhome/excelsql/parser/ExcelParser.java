@@ -1,4 +1,4 @@
-package com.github.rrsunhome.excelsql.parse;
+package com.github.rrsunhome.excelsql.parser;
 
 import com.github.rrsunhome.excelsql.RuleParserConfig;
 import com.github.rrsunhome.excelsql.SqlDefinition;
@@ -13,19 +13,35 @@ import java.util.List;
 /**
  * @author : qijia.wang
  * create at:  2020/3/31  下午3:43
- * @description:
  */
 public class ExcelParser {
 
-
+    /**
+     * @param path             路径
+     * @param ruleParserConfig 解析规则
+     * @return sql定义的对象
+     * @throws Exception 解析异常
+     */
     public SqlDefinition parser(String path, RuleParserConfig ruleParserConfig) throws Exception {
         return parser(new File(path), ruleParserConfig);
     }
 
+    /**
+     * @param file             文件
+     * @param ruleParserConfig 解析规则
+     * @return sql定义的对象
+     * @throws Exception 解析异常
+     */
     public SqlDefinition parser(File file, RuleParserConfig ruleParserConfig) throws Exception {
         return parser(new FileInputStream(file), ruleParserConfig);
     }
 
+    /**
+     * @param is               文件
+     * @param ruleParserConfig 解析规则
+     * @return sql定义的对象
+     * @throws Exception 解析异常
+     */
     public SqlDefinition parser(InputStream is, RuleParserConfig ruleParserConfig) throws Exception {
 
         List<RuleParserConfig.FieldMapping> fieldMappings = ruleParserConfig.getFieldMappings();
@@ -35,7 +51,7 @@ public class ExcelParser {
         if (StringUtils.isEmpty(tableMapping.getSheetName())) {
             lists = ExcelUtils.readExcel(is, tableMapping.getSheetIndex(), ruleParserConfig.getStartRowIndex());
         } else {
-            lists = ExcelUtils.readExcel(is , tableMapping.getSheetName(), ruleParserConfig.getStartRowIndex());
+            lists = ExcelUtils.readExcel(is, tableMapping.getSheetName(), ruleParserConfig.getStartRowIndex());
         }
 
         SqlDefinition sqlDefinition = new SqlDefinition(tableMapping.getTableName());

@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 /**
  * @author : qijia.wang
  * create at:  2020/3/31  下午4:03
- * @description:
  */
 public class SqlDefinition {
 

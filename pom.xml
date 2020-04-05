@@ -14,7 +14,7 @@
 
     <groupId>com.github.rrsunhome</groupId>
     <artifactId>excelsql-project</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>excel sql project</name>

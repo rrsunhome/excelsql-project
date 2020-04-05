@@ -10,7 +10,7 @@
 
 ### 生成 insert语句
 demo代码地址：
-https://github.com/rrsunhome/excelsql-project/blob/master/excelsql-gererate-sample/src/main/java/com/sunhome/excelsql/sample/InsertSqlBootstrap.java
+https://github.com/rrsunhome/excelsql-project/blob/master/excelsql-gererate-sample/src/main/java/com/github/rrsunhome/excelsql/sample/InsertSqlBootstrap.java
 ```java
        ParserConfigSource parserConfigSource = new ParserConfigSourceAdapter() {
             @Override
@@ -41,7 +41,7 @@ https://github.com/rrsunhome/excelsql-project/blob/master/excelsql-gererate-samp
 
 ### 生成 update语句
 demo代码地址：
-https://github.com/rrsunhome/excelsql-project/blob/master/excelsql-gererate-sample/src/main/java/com/sunhome/excelsql/sample/UpdateSqlBootstrap.java
+https://github.com/rrsunhome/excelsql-project/blob/master/excelsql-gererate-sample/src/main/java/com/github/rrsunhome/excelsql/sample/UpdateSqlBootstrap.java
 ```java
         ParserConfigSource parserConfigSource = new ParserConfigSourceAdapter() {
             @Override
@@ -73,7 +73,7 @@ https://github.com/rrsunhome/excelsql-project/blob/master/excelsql-gererate-samp
 
 ### 生成 select语句
 demo代码地址：
-https://github.com/rrsunhome/excelsql-project/blob/master/excelsql-gererate-sample/src/main/java/com/sunhome/excelsql/sample/SelectSqlBootstrap.java
+https://github.com/rrsunhome/excelsql-project/blob/master/excelsql-gererate-sample/src/main/java/com/github/rrsunhome/excelsql/sample/SelectSqlBootstrap.java
 ```java
 
         ParserConfigSource parserConfigSource = new ParserConfigSourceAdapter() {
@@ -108,7 +108,7 @@ https://github.com/rrsunhome/excelsql-project/blob/master/excelsql-gererate-samp
 
 ### 生成 delete语句
 demo代码地址：
-https://github.com/rrsunhome/excelsql-project/blob/master/excelsql-gererate-sample/src/main/java/com/sunhome/excelsql/sample/DeleteSqlBootstrap.java
+https://github.com/rrsunhome/excelsql-project/blob/master/excelsql-gererate-sample/src/main/java/com/github/rrsunhome/excelsql/sample/DeleteSqlBootstrap.java
 ```java
 
         ParserConfigSource parserConfigSource = new ParserConfigSourceAdapter() {

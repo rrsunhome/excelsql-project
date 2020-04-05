@@ -1,4 +1,4 @@
-package com.sunhome.excelsql;
+package com.github.rrsunhome.excelsql;
 
 import java.util.ArrayList;
 import java.util.HashMap;

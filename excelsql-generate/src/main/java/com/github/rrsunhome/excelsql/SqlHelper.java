@@ -1,6 +1,6 @@
-package com.sunhome.excelsql;
+package com.github.rrsunhome.excelsql;
 
-import com.sunhome.excelsql.util.SqlUtils;
+import com.github.rrsunhome.excelsql.util.SqlUtils;
 
 import java.util.ArrayList;
 import java.util.List;

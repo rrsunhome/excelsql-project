@@ -1,4 +1,4 @@
-package com.sunhome.excelsql.util;
+package com.github.rrsunhome.excelsql.util;
 
 
 import java.io.*;

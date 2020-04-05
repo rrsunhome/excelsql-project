@@ -1,9 +1,8 @@
-package com.sunhome.excelsql.parse;
+package com.github.rrsunhome.excelsql.parse;
 
-import com.sunhome.excelsql.RuleParserConfig;
-import com.sunhome.excelsql.SqlDefinition;
-import com.sunhome.excelsql.util.ExcelInputStream;
-import com.sunhome.excelsql.util.ExcelUtils;
+import com.github.rrsunhome.excelsql.RuleParserConfig;
+import com.github.rrsunhome.excelsql.SqlDefinition;
+import com.github.rrsunhome.excelsql.util.ExcelUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;

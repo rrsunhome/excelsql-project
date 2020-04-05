@@ -1,23 +1,13 @@
-package com.sunhome.excelsql.sample;
+package com.github.rrsunhome.excelsql.sample;
 
-import com.sunhome.excelsql.*;
-import com.sunhome.excelsql.util.ExcelInputStream;
-import com.sunhome.excelsql.util.HttpUtils;
-import com.sunhome.excelsql.view.FileViewer;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import java.io.*;
-import java.net.URL;
+import com.github.rrsunhome.excelsql.*;
 
 /**
  * @author : qijia.wang
  * create at:  2020/4/1  下午4:10
  * @description:
  */
-public class InsertSqlBootstrap {
+public class SelectSqlBootstrap {
 
     public static void main(String[] args) throws Exception {
 
@@ -30,8 +20,7 @@ public class InsertSqlBootstrap {
                 ruleParserConfig.addTableMapping("user", 0);
 
                 // 字段名对excel title的映射
-                ruleParserConfig.addFieldMapping("name", 0);
-                ruleParserConfig.addFieldMapping("age", 1);
+                ruleParserConfig.addFieldMapping("name", 0,true);
             }
 
             @Override
@@ -41,7 +30,7 @@ public class InsertSqlBootstrap {
             }
             @Override
             public Sql sql() {
-                return Sql.INSERT;
+                return Sql.SELECT;
             }
         };
 

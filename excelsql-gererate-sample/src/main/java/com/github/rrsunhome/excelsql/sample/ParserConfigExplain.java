@@ -1,9 +1,9 @@
-package com.sunhome.excelsql.sample;
+package com.github.rrsunhome.excelsql.sample;
 
-import com.sunhome.excelsql.ParserConfigSource;
-import com.sunhome.excelsql.ParserConfigSourceAdapter;
-import com.sunhome.excelsql.RuleParserConfig;
-import com.sunhome.excelsql.Sql;
+import com.github.rrsunhome.excelsql.ParserConfigSource;
+import com.github.rrsunhome.excelsql.ParserConfigSourceAdapter;
+import com.github.rrsunhome.excelsql.RuleParserConfig;
+import com.github.rrsunhome.excelsql.Sql;
 
 import java.util.Arrays;
 import java.util.HashMap;

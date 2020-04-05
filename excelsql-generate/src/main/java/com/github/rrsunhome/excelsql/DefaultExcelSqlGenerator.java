@@ -1,9 +1,9 @@
-package com.sunhome.excelsql;
+package com.github.rrsunhome.excelsql;
 
-import com.sunhome.excelsql.parse.ExcelParser;
-import com.sunhome.excelsql.util.ExcelInputStream;
-import com.sunhome.excelsql.view.ConsoleViewer;
-import com.sunhome.excelsql.view.Viewer;
+import com.github.rrsunhome.excelsql.parse.ExcelParser;
+import com.github.rrsunhome.excelsql.util.ExcelInputStream;
+import com.github.rrsunhome.excelsql.view.ConsoleViewer;
+import com.github.rrsunhome.excelsql.view.Viewer;
 
 import java.io.InputStream;
 import java.util.ArrayList;

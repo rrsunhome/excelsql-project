@@ -1,13 +1,13 @@
-package com.sunhome.excelsql.sample;
+package com.github.rrsunhome.excelsql.sample;
 
-import com.sunhome.excelsql.*;
+import com.github.rrsunhome.excelsql.*;
 
 /**
  * @author : qijia.wang
  * create at:  2020/4/1  下午4:10
  * @description:
  */
-public class DeleteSqlBootstrap {
+public class InsertSqlBootstrap {
 
     public static void main(String[] args) throws Exception {
 
@@ -20,7 +20,8 @@ public class DeleteSqlBootstrap {
                 ruleParserConfig.addTableMapping("user", 0);
 
                 // 字段名对excel title的映射
-                ruleParserConfig.addFieldMapping("name", 0,true);
+                ruleParserConfig.addFieldMapping("name", 0);
+                ruleParserConfig.addFieldMapping("age", 1);
             }
 
             @Override
@@ -30,7 +31,7 @@ public class DeleteSqlBootstrap {
             }
             @Override
             public Sql sql() {
-                return Sql.DELETE;
+                return Sql.INSERT;
             }
         };
 
